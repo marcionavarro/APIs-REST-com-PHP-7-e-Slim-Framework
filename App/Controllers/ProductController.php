@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\DAO\MySQL\Codeeasy\LojasDAO;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -12,6 +13,9 @@ final class ProductController
         $response = $response->withJson([
             "message" => "Hello World"
         ]);
+
+        $LojasDAO = new LojasDAO();
+        $LojasDAO->teste();
         return $response;
     }
 }
