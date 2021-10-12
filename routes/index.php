@@ -1,7 +1,6 @@
 <?php
 
 use App\Middlewares\JwtDateTimeMiddleware;
-use Tuupola\Middleware\JwtAuthentication;
 use function src\{jwtAuth, slimConfiguration, basicAuth};
 
 use App\Controllers\{
@@ -14,6 +13,18 @@ use App\Controllers\{
 $app = new \Slim\App(slimConfiguration());
 
 // =================================
+
+$app->group('/v1', function () use ($app) {
+    $app->get('/test-with-versions', function () {
+        return "oi v1";
+    });
+});
+
+$app->group('/v2', function () use ($app) {
+    $app->get('/test-with-versions', function () {
+        return "oi v2";
+    });
+});
 
 $app->get('/exception-test', ExceptionController::class . ':test');
 
