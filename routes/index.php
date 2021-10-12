@@ -1,14 +1,10 @@
 <?php
 
 use App\Middlewares\JwtDateTimeMiddleware;
+
 use function src\{jwtAuth, slimConfiguration, basicAuth};
 
-use App\Controllers\{
-    AuthController,
-    ProdutoController,
-    LojaController,
-    ExceptionController
-};
+use App\Controllers\{ AuthController, ProdutoController, LojaController, ExceptionController };
 
 $app = new \Slim\App(slimConfiguration());
 
@@ -33,7 +29,7 @@ $app->post('/refresh-token', AuthController::class . ':refreshToken');
 
 $app->get('/teste', function () {
     echo "oi";
-})->add(new JwtDateTimeMiddleware())->add(jwtAuth());
+})->add(jwtAuth());
 
 $app->group('', function () use ($app) {
     $app->get('/lojas', LojaController::class . ':getLojas');

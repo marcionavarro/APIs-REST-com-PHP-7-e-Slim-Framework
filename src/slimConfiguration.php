@@ -1,5 +1,8 @@
 <?php
+
 namespace  src;
+
+use App\DAO\MySQL\Codeeasy\LojasDAO;
 
 function slimConfiguration(): \Slim\Container
 {
@@ -8,5 +11,8 @@ function slimConfiguration(): \Slim\Container
             'displayErrorDetails' => getenv('DISPLAY_ERRORS_DETAILS'),
         ],
     ];
-    return new \Slim\Container($configuration);
+    $container = new \Slim\Container($configuration);
+    $container->offsetSet(LojasDAO::class, new LojasDAO());
+
+    return $container;
 }

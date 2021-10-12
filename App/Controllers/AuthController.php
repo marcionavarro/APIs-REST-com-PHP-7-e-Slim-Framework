@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\DAO\MySQL\Codeeasy\TokensDAO;
 use App\DAO\MySQL\Codeeasy\UsuariosDAO;
 use App\Models\MYSQL\Codeeasy\TokenModel;
+use DateTime;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Firebase\JWT\JWT;
@@ -34,7 +35,7 @@ final class AuthController
             'sub' => $usuario->getId(),
             'name' => $usuario->getNome(),
             'email' => $usuario->getEmail(),
-            'expired_at' => $expireDate
+            'exp' => (new DateTime($expireDate))->getTimestamp()
         ];
         $token = JWT::encode($tokenPayload, getenv('JWT_SECRET_KEY'));
 
@@ -71,7 +72,6 @@ final class AuthController
             $refreshToken,
             getenv('JWT_SECRET_KEY'),
             ['HS256']
-
         );
 
         $tokensDAO = new TokensDAO();
@@ -91,7 +91,7 @@ final class AuthController
             'sub' => $usuario->getId(),
             'name' => $usuario->getNome(),
             'email' => $usuario->getEmail(),
-            'expired_at' => $expireDate
+            'exp' => (new DateTime($expireDate))->getTimestamp()
         ];
         $token = JWT::encode($tokenPayload, getenv('JWT_SECRET_KEY'));
 

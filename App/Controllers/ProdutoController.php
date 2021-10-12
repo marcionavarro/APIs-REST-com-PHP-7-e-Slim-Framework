@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\DAO\MySQL\Codeeasy\ProdutosDAO;
-use App\Models\MYSQL\Codeeasy\ProdutoModel;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 

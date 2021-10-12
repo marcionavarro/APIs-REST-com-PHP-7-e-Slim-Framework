@@ -6,15 +6,23 @@ use App\DAO\MySQL\Codeeasy\LojasDAO;
 use App\Models\MYSQL\Codeeasy\LojaModel;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Container;
 
 final class LojaController
 {
+    /** @var LojasDAO $lojasDAO */
+    private $lojasDAO;
+
+    public function __construct(Container $container)
+    {
+        $this->lojasDAO = $container->offsetGet(LojasDAO::class);
+    }
+
     public function getLojas(Request $request, Response $response, array $args): Response
     {
-        $lojasDAO = new LojasDAO();
-        $lojas = $lojasDAO->getAllLojas();
-        $response = $response->withJson($lojas);
-        return $response;
+        $lojas = $this->lojasDAO->getAllLojas();
+        $response->getBody()->write(json_encode($lojas, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
     public function insertLoja(Request $request, Response $response, array $args): Response

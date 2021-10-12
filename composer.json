@@ -1,5 +1,6 @@
 {
     "require": {
+        "php":"^7.3",
         "slim/slim": "^3.0",
         "squizlabs/php_codesniffer": "*",
         "tuupola/slim-basic-auth": "^3.3",
