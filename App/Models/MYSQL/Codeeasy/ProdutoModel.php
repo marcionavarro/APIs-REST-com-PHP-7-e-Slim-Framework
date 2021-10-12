@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models\MYSQL\Codeeasy;
 
 

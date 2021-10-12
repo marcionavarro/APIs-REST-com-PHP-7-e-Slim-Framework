@@ -1,11 +1,11 @@
 <?php
 
-use function src\{
-    slimConfiguration,
-    basicAuth
-};
+use App\Middlewares\JwtDateTimeMiddleware;
+use Tuupola\Middleware\JwtAuthentication;
+use function src\{jwtAuth, slimConfiguration, basicAuth};
 
-use \App\Controllers\{
+use App\Controllers\{
+    AuthController,
     ProdutoController,
     LojaController
 };
@@ -14,7 +14,14 @@ $app = new \Slim\App(slimConfiguration());
 
 // =================================
 
-$app->group('', function () use ($app){
+$app->post('/login', AuthController::class . ':login');
+$app->post('/refresh-token', AuthController::class . ':refreshToken');
+
+$app->get('/teste', function () {
+    echo "oi";
+})->add(new JwtDateTimeMiddleware())->add(jwtAuth());
+
+$app->group('', function () use ($app) {
     $app->get('/lojas', LojaController::class . ':getLojas');
     $app->post('/loja', LojaController::class . ':insertLoja');
     $app->put('/loja[/{id}]', LojaController::class . ':updateLoja');
