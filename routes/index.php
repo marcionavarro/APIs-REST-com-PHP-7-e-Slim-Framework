@@ -7,12 +7,15 @@ use function src\{jwtAuth, slimConfiguration, basicAuth};
 use App\Controllers\{
     AuthController,
     ProdutoController,
-    LojaController
+    LojaController,
+    ExceptionController
 };
 
 $app = new \Slim\App(slimConfiguration());
 
 // =================================
+
+$app->get('/exception-test', ExceptionController::class . ':test');
 
 $app->post('/login', AuthController::class . ':login');
 $app->post('/refresh-token', AuthController::class . ':refreshToken');
